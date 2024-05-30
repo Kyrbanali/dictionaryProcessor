@@ -4,33 +4,35 @@ namespace Src;
 
 
 require_once ("src/Pushers/FilePusher.php");
-require_once "src/Exceptions/DictionaryProcessorException.php";
+require_once ("src/Pushers/PusherInterface.php");
 
 use src\Pushers\FilePusher;
-use Src\Exceptions\DictionaryProcessorException;
+use src\Pushers\PusherInterface;
 
 class DictionaryProcessor
 {
+    private PusherInterface $pusher;
+
+    public function __construct(PusherInterface $pusher)
+    {
+        $this->pusher = $pusher;
+    }
+
     public function processFile($filePath)
     {
-        $pusher = new FilePusher();
-        $exception = new DictionaryProcessorException();
 
         if (!file_exists($filePath)) {
-            $exception->exception();
+            throw new \Exception("Файл не существует: $filePath");
         }
 
         $handle = fopen($filePath, "r");
         if ($handle === false) {
-            $exception->exception();
+            throw new \Exception("Не удалось открыть файл: $filePath");
         }
 
         while (($line = fgets($handle) )!== false) {
             $word = trim($line);
-            print_r("\n$word\n");
-
-            $pusher->pushData($word);
-
+            $this->pusher->pushData($word);
         }
 
         fclose($handle);
