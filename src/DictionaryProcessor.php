@@ -2,11 +2,8 @@
 
 namespace Src;
 
-
-require_once ("src/Pushers/FilePusher.php");
 require_once ("src/Pushers/PusherInterface.php");
 
-use src\Pushers\FilePusher;
 use src\Pushers\PusherInterface;
 
 class DictionaryProcessor
@@ -18,7 +15,7 @@ class DictionaryProcessor
         $this->pusher = $pusher;
     }
 
-    public function processFile($filePath)
+    public function processFile(string $filePath)
     {
 
         if (!file_exists($filePath)) {

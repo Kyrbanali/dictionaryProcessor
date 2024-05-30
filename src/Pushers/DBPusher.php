@@ -2,11 +2,12 @@
 
 namespace src\Pushers;
 
+use PDO;
 use PDOException;
 
 class DBPusher implements PusherInterface
 {
-    private $pdo;
+    private PDO $pdo;
 
     public function __construct()
     {
@@ -18,10 +19,10 @@ class DBPusher implements PusherInterface
 
     }
 
-    public function pushData($word)
+    public function pushData(string $word)
     {
-        $firstLetter = $word[0];
-        $letterCount = substr_count($word, $firstLetter);
+        $firstLetter = mb_substr($word, 0, 1);
+        $letterCount = mb_substr_count(strtolower($word), strtolower($firstLetter));
 
         $sql = 'INSERT INTO words (first_letter, word, letter_count) VALUES (:first_letter, :word, :letter_count)';
 

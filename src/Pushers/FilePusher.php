@@ -6,7 +6,7 @@ require_once "src/Pushers/PusherInterface.php";
 
 class FilePusher implements PusherInterface
 {
-    public function pushData($word)
+    public function pushData(string $word)
     {
         $firstLetter = mb_substr($word, 0, 1);
         $letterPath = __DIR__ . "/../../library/$firstLetter";

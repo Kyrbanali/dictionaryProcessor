@@ -4,6 +4,6 @@ namespace src\Pushers;
 
 interface PusherInterface
 {
-    public function pushData($word);
+    public function pushData(string $word);
 
 }
